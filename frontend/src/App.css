@@ -1,0 +1,72 @@
+/* Global Five custom styles */
+html { scroll-behavior: smooth; }
+
+.App {
+  font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.font-display {
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  letter-spacing: -0.02em;
+}
+
+/* Subtle grid background */
+.bg-grid {
+  background-image: linear-gradient(rgba(15,42,75,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15,42,75,0.06) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+/* Hero gradient overlay */
+.hero-overlay {
+  background: linear-gradient(110deg, rgba(8,30,57,0.92) 0%, rgba(8,30,57,0.72) 45%, rgba(8,30,57,0.35) 100%);
+}
+
+/* Number reveal */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fade-up { animation: fadeUp 0.8s ease-out both; }
+.fade-up-delay-1 { animation: fadeUp 0.8s ease-out 0.12s both; }
+.fade-up-delay-2 { animation: fadeUp 0.8s ease-out 0.24s both; }
+.fade-up-delay-3 { animation: fadeUp 0.8s ease-out 0.36s both; }
+
+/* Card hover lift */
+.lift {
+  transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+}
+.lift:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 50px -20px rgba(8,30,57,0.25);
+}
+
+/* Image zoom on hover */
+.img-zoom { overflow: hidden; }
+.img-zoom img { transition: transform 0.7s ease; }
+.img-zoom:hover img { transform: scale(1.08); }
+
+/* Marquee */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.marquee-track { animation: marquee 32s linear infinite; }
+
+/* Underline link */
+.link-underline {
+  position: relative;
+}
+.link-underline::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: -4px;
+  width: 0; height: 2px;
+  background: #0ea5b7;
+  transition: width 0.3s ease;
+}
+.link-underline:hover::after { width: 100%; }
+
+/* Section padding */
+.section { padding-top: 6rem; padding-bottom: 6rem; }
+@media (max-width: 768px) { .section { padding-top: 4rem; padding-bottom: 4rem; } }
