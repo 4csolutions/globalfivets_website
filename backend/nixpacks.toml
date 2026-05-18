@@ -1,0 +1,26 @@
+# Nixpacks configuration for FastAPI backend
+# Used by Coolify to build & run this service.
+
+providers = ["python"]
+
+[phases.setup]
+nixPkgs = ["python311", "gcc"]
+
+[phases.install]
+cmds = [
+  "python -m venv /opt/venv",
+  ". /opt/venv/bin/activate && pip install --upgrade pip",
+  ". /opt/venv/bin/activate && pip install -r requirements.txt"
+]
+
+[phases.build]
+cmds = [
+  "mkdir -p uploads/projects"
+]
+
+[start]
+cmd = ". /opt/venv/bin/activate && uvicorn server:app --host 0.0.0.0 --port ${PORT:-8001} --workers 2"
+
+[variables]
+PYTHONUNBUFFERED = "1"
+PYTHONDONTWRITEBYTECODE = "1"

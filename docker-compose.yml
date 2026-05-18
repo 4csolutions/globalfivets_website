@@ -1,0 +1,60 @@
+# Coolify-friendly docker-compose for the full Global Five stack.
+#
+# Deploy this in Coolify as a "Docker Compose" application:
+#   1. Create a new resource -> Docker Compose -> point to this repo.
+#   2. Set the env vars listed under each service (see .env.coolify.example).
+#   3. Configure persistent volumes for `mongo_data` and `backend_uploads`.
+#   4. Set up Coolify domains:
+#        - backend  -> https://api.your-domain.com
+#        - frontend -> https://your-domain.com  (set BACKEND_URL build arg accordingly)
+
+services:
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_DATABASE: ${DB_NAME:-globalfive}
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 20s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      mongo:
+        condition: service_healthy
+    environment:
+      MONGO_URL: ${MONGO_URL:-mongodb://mongo:27017}
+      DB_NAME: ${DB_NAME:-globalfive}
+      JWT_SECRET: ${JWT_SECRET:-change-me-in-production}
+      CORS_ORIGINS: ${CORS_ORIGINS:-*}
+      PORT: 8001
+    volumes:
+      - backend_uploads:/app/uploads
+    expose:
+      - "8001"
+    # Coolify will assign the public domain via labels; expose internally only.
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        # IMPORTANT: must be the PUBLIC backend URL (Coolify domain)
+        REACT_APP_BACKEND_URL: ${REACT_APP_BACKEND_URL}
+    restart: unless-stopped
+    depends_on:
+      - backend
+    expose:
+      - "80"
+
+volumes:
+  mongo_data:
+  backend_uploads:

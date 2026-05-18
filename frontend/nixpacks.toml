@@ -1,0 +1,28 @@
+# Nixpacks configuration for React (CRA) frontend
+# Used by Coolify to build & serve the static bundle.
+#
+# IMPORTANT: REACT_APP_BACKEND_URL must be set as a BUILD-time env var
+# in Coolify before the build phase runs (CRA bakes it into the bundle).
+
+providers = ["node"]
+
+[phases.setup]
+nixPkgs = ["nodejs_20", "yarn"]
+
+[phases.install]
+cmds = [
+  "yarn install --frozen-lockfile --network-timeout 600000"
+]
+
+[phases.build]
+cmds = [
+  "yarn build"
+]
+
+[start]
+cmd = "npx serve -s build -l ${PORT:-3000}"
+
+[variables]
+NODE_ENV = "production"
+CI = "false"
+GENERATE_SOURCEMAP = "false"
