@@ -8,6 +8,7 @@ import { Label } from "../components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select";
 import { toast } from "sonner";
 import { contact, services } from "../mock";
+import api from "../lib/api";
 
 export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", phone: "", company: "", service: "", message: "" });
@@ -16,26 +17,23 @@ export default function Contact() {
 
   const update = (k, v) => setForm((f) => ({ ...f, [k]: v }));
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
     if (!form.name || !form.email || !form.message) {
       toast.error("Please complete name, email and message.");
       return;
     }
     setSending(true);
-    setTimeout(() => {
-      try {
-        const stored = JSON.parse(localStorage.getItem("gf_inquiries") || "[]");
-        stored.push({ ...form, at: new Date().toISOString() });
-        localStorage.setItem("gf_inquiries", JSON.stringify(stored));
-      } catch (e) {
-        // ignore
-      }
+    try {
+      await api.post("/inquiries", form);
       setSending(false);
       setSent(true);
       toast.success("Inquiry received — our team will reach out within one business day.");
       setForm({ name: "", email: "", phone: "", company: "", service: "", message: "" });
-    }, 900);
+    } catch (err) {
+      setSending(false);
+      toast.error(err?.response?.data?.detail || "Failed to send inquiry. Please try again.");
+    }
   };
 
   const blocks = [
