@@ -11,7 +11,7 @@ nixPkgs = ["nodejs_20", "yarn"]
 
 [phases.install]
 cmds = [
-  "yarn install --frozen-lockfile --network-timeout 600000"
+  "if [ -f yarn.lock ]; then yarn install --frozen-lockfile --network-timeout 600000; else yarn install --network-timeout 600000; fi"
 ]
 
 [phases.build]
