@@ -28,6 +28,6 @@ RUN mkdir -p /app/uploads/projects
 EXPOSE 8001
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \
-    CMD curl -fsS http://localhost:${PORT:-8001}/api/health || exit 1
+    CMD curl -fsS http://127.0.0.1:${PORT:-8001}/api/health || exit 1
 
 CMD ["sh", "-c", "uvicorn server:app --host 0.0.0.0 --port ${PORT:-8001} --workers 2"]
