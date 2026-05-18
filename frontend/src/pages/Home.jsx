@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   ArrowRight,
@@ -17,11 +17,21 @@ import {
 } from "lucide-react";
 import { Button } from "../components/ui/button";
 import { Badge } from "../components/ui/badge";
-import { services, stats, values, projects, clients, testimonials, companyInfo } from "../mock";
+import { services, stats, values, clients, testimonials, companyInfo } from "../mock";
+import api, { resolveImage } from "../lib/api";
 
 const iconMap = { Droplets, Recycle, RadioTower, Settings, Zap, PackageCheck, Award, MapPin, ShieldCheck, Clock };
 
 export default function Home() {
+  const [projects, setProjects] = useState([]);
+
+  useEffect(() => {
+    api
+      .get("/projects", { params: { limit: 3 } })
+      .then((r) => setProjects(r.data || []))
+      .catch(() => setProjects([]));
+  }, []);
+
   return (
     <>
       {/* HERO */}
@@ -208,24 +218,23 @@ export default function Home() {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {projects.slice(0, 3).map((p) => (
-              <div key={p.id} className="lift bg-white border border-slate-200 rounded-2xl overflow-hidden">
-                <div className="img-zoom h-56">
-                  <img src={p.image} alt={p.title} className="w-full h-full object-cover" />
+              <Link key={p.id} to="/projects" className="lift bg-white border border-slate-200 rounded-2xl overflow-hidden block">
+                <div className="img-zoom h-56 bg-slate-100">
+                  {p.image_url && <img src={resolveImage(p.image_url)} alt={p.title} className="w-full h-full object-cover" />}
                 </div>
                 <div className="p-6">
                   <div className="flex items-center gap-2 text-xs text-cyan-600 font-semibold uppercase tracking-wider">
                     <span>{p.category}</span>
-                    <span className="w-1 h-1 rounded-full bg-cyan-600" />
-                    <span className="text-slate-400">{p.year}</span>
+                    {p.year && (<><span className="w-1 h-1 rounded-full bg-cyan-600" /><span className="text-slate-400">{p.year}</span></>)}
                   </div>
                   <h3 className="font-display font-bold text-lg text-[#0a2540] mt-2">{p.title}</h3>
-                  <p className="text-sm text-slate-600 mt-2 leading-relaxed">{p.summary}</p>
+                  <p className="text-sm text-slate-600 mt-2 leading-relaxed line-clamp-2">{p.summary}</p>
                   <div className="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-                    <span className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5" />{p.location}</span>
-                    <span className="font-medium">{p.client}</span>
+                    <span className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5" />{p.location || "Oman"}</span>
+                    <span className="font-medium">{p.client || ""}</span>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
