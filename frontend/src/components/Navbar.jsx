@@ -52,17 +52,9 @@ export default function Navbar() {
       </div>
 
       <nav className="max-w-7xl mx-auto px-6 h-[72px] flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-3 group">
-          <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${solid ? "bg-[#0a2540]" : "bg-white/10 backdrop-blur border border-white/20"}`}>
-            <Droplets className="w-5 h-5 text-cyan-300" />
-          </div>
-          <div className="flex flex-col leading-none">
-            <span className={`font-display font-extrabold text-[17px] ${solid ? "text-[#0a2540]" : "text-white"}`}>
-              Global Five
-            </span>
-            <span className={`text-[10px] uppercase tracking-[0.18em] ${solid ? "text-slate-500" : "text-cyan-200"}`}>
-              Trading & Services LLC
-            </span>
+        <Link to="/" className="flex items-center group">
+          <div className={`transition-all duration-300 ${!solid ? "bg-white p-1.5 rounded-lg shadow-md" : ""}`}>
+            <img src="/logo.png" alt="Global Five Logo" className="h-10 md:h-12 w-auto object-contain" />
           </div>
         </Link>
 

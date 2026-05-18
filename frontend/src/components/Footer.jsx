@@ -9,12 +9,8 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-6 py-16 grid lg:grid-cols-4 md:grid-cols-2 gap-10">
         <div className="space-y-5">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center">
-              <Droplets className="w-5 h-5 text-cyan-300" />
-            </div>
-            <div className="leading-tight">
-              <div className="font-display font-extrabold text-white text-lg">Global Five</div>
-              <div className="text-[10px] uppercase tracking-[0.18em] text-cyan-300">Trading & Services LLC</div>
+            <div className="bg-white p-2 rounded-lg inline-block">
+              <img src="/logo.png" alt="Global Five Logo" className="h-10 w-auto object-contain" />
             </div>
           </div>
           <p className="text-sm text-slate-400 leading-relaxed">
