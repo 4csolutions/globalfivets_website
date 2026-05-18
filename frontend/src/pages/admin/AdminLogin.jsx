@@ -11,8 +11,8 @@ export default function AdminLogin() {
   const { login, user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const [email, setEmail] = useState("admin@globalfivets.com");
-  const [password, setPassword] = useState("Admin@12345");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
   React.useEffect(() => {
@@ -98,11 +98,7 @@ export default function AdminLogin() {
             </Button>
           </form>
 
-          <div className="mt-8 p-4 bg-cyan-50 border border-cyan-100 rounded-lg text-xs text-slate-600">
-            <div className="font-semibold text-[#0a2540] mb-1">Default credentials (change after first login)</div>
-            <div>Email: <code className="text-cyan-700">admin@globalfivets.com</code></div>
-            <div>Password: <code className="text-cyan-700">Admin@12345</code></div>
-          </div>
+
         </div>
       </div>
     </div>
