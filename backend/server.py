@@ -39,11 +39,13 @@ from routes_auth import router as auth_router  # noqa: E402
 from routes_users import router as users_router  # noqa: E402
 from routes_projects import router as projects_router  # noqa: E402
 from routes_uploads import router as uploads_router  # noqa: E402
+from routes_inquiries import router as inquiries_router  # noqa: E402
 
 api_router.include_router(auth_router)
 api_router.include_router(users_router)
 api_router.include_router(projects_router)
 api_router.include_router(uploads_router)
+api_router.include_router(inquiries_router)
 
 app.include_router(api_router)
 
