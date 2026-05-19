@@ -77,7 +77,20 @@ export default function Footer() {
 
       <div className="border-t border-white/10">
         <div className="max-w-7xl mx-auto px-6 py-5 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-slate-500">
-          <span>© {new Date().getFullYear()} Global Five Trading and Services LLC. All rights reserved.</span>
+          <div className="flex flex-col gap-1">
+            <span>© {new Date().getFullYear()} Global Five Trading and Services LLC. All rights reserved.</span>
+            <span>
+              Designed & developed by{" "}
+              <a
+                href="https://4csolutions.in"
+                target="_blank"
+                rel="noreferrer"
+                className="hover:text-cyan-300 transition-colors"
+              >
+                4C Solutions
+              </a>
+            </span>
+          </div>
           <span className="flex items-center gap-6">
             <a href="#" className="hover:text-cyan-300">Privacy Policy</a>
             <a href="#" className="hover:text-cyan-300">Terms of Service</a>
